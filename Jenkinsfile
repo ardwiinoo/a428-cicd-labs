@@ -54,12 +54,13 @@ pipeline {
                 sh '''
                     docker rm -f react-app-deploy || true
                     docker run -d \
-                      --name react-app-deploy \
-                      -p 3001:3000 \
-                      -v "$WORKSPACE":/app \
-                      -w /app \
-                      node:16-buster-slim \
-                      sh -c "npm install --legacy-peer-deps && npm start"
+                    --name react-app-deploy \
+                    -p 3001:3000 \
+                    -v "$WORKSPACE":/app \
+                    -w /app \
+                    -e HOST=0.0.0.0 \
+                    node:16-buster-slim \
+                    sh -c "npm start"
 
                     sleep 60
 
